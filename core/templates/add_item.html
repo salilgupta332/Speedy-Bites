@@ -1,0 +1,11 @@
+<!-- templates/add_item.html -->
+
+<h1>Add New Menu Item</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Item</button>
+</form>
+
+<p><a href="/">Back to Menu</a></p>
