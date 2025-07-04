@@ -10,7 +10,7 @@ services:
       - DJANGO_ALLOWED_HOSTS=*
       - DJANGO_SECRET_KEY=super-secret-key
       - MONGO_USERNAME=salilgupta332
-      - MONGO_PASSWORD=SpeedyBites@123
+      - MONGO_PASSWORD=Speedy123
       - MONGO_CLUSTER=cluster0.icd6aqk.mongodb.net
     volumes:
       - .:/app
