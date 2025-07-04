@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: speedy_bites_web
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_ALLOWED_HOSTS=*
+      - DJANGO_SECRET_KEY=super-secret-key
+      - MONGO_USERNAME=salilgupta332
+      - MONGO_PASSWORD=SpeedyBites@123
+      - MONGO_CLUSTER=cluster0.icd6aqk.mongodb.net
+    volumes:
+      - .:/app
+    command: python manage.py runserver 0.0.0.0:8000

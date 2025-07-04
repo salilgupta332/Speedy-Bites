@@ -12,12 +12,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import os
 
 from mongoengine import connect
 from urllib.parse import quote_plus
 
-username = quote_plus('salilgupta332')
-password = quote_plus('Speedy123')
+MONGO_USERNAME = quote_plus(os.getenv('MONGO_USERNAME'))
+MONGO_PASSWORD = quote_plus(os.getenv('MONGO_PASSWORD'))
+MONGO_CLUSTER = os.getenv('MONGO_CLUSTER')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,7 +33,7 @@ SECRET_KEY = 'django-insecure-5#-%d3@uu#%b872+gse-$d!$9e-^%b_7m7ym0m+i2_*y#7s=j3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 
 # Application definition
@@ -132,7 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 connect(
     db='speedy_bites',
-    host=f'mongodb+srv://{username}:{password}@cluster0.icd6aqk.mongodb.net/speedy_bites?retryWrites=true&w=majority'
+    host=f'mongodb+srv://{MONGO_USERNAME}:{MONGO_PASSWORD}@{MONGO_CLUSTER}/?retryWrites=true&w=majority',
 )
 
 
