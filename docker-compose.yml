@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   web:
-    build: .
+    image: devops22003/speedy-bites:latest
     container_name: speedy_bites_web
     ports:
       - "8000:8000"
