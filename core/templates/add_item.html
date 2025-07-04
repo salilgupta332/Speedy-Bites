@@ -1,11 +1,23 @@
 <!-- templates/add_item.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add New Menu Item</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/add_item.css' %}"
+    />
+  </head>
+  <body>
+    <h1>Add New Menu Item</h1>
 
-<h1>Add New Menu Item</h1>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Add Item</button>
+    </form>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Item</button>
-</form>
-
-<p><a href="/">Back to Menu</a></p>
+    <p><a href="/">Back to Menu</a></p>
+  </body>
+</html>
