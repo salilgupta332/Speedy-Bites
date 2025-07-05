@@ -1,18 +1,23 @@
+<!-- templates/edit_item.html -->
+
+{% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Edit Item - Speedy Bites</title>
-</head>
-<body>
-    <h1>✏️ Edit Menu Item</h1>
-
-    <form method="post">
+  <head>
+    <title>Edit Menu Item</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/edit_item.css' %}">
+  </head>
+  <body>
+    <!-- ----- Updated Code Start: edit_item.html ----- -->
+    <div class="container">
+      <h2>Edit Menu Item</h2>
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
-
-    <br>
-    <a href="{% url 'home' %}">⬅️ Back to Menu</a>
-</body>
+        <button type="submit">Update</button>
+      </form>
+      <a href="/">Back to Menu</a>
+    </div>
+    <!-- ----- Updated Code End: edit_item.html ----- -->
+  </body>
 </html>
