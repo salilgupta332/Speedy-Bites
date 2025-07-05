@@ -1,23 +1,68 @@
 <!-- templates/landing.html -->
-<!-- ==== Updated Code Start ==== -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to Speedy Bites</title>
-    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedy Bites - Welcome</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to 🍔 Speedy Bites</h1>
-        <p>Your favorite cloud kitchen delivering delicious meals round the clock!</p>
-
-        <div class="buttons">
-            <a href="/menu" class="btn">View Menu</a>
-            <a href="/admin/" class="btn">Admin Login</a>
+    <header>
+        <div class="logo">
+            <span class="icon">🍽️</span> Food
         </div>
-    </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#speciality">Speciality</a></li>
+                <li><a href="#popular">Popular</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#review">Review</a></li>
+                <li><a href="#order">Order</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-text">
+            <h1>Food Made With Love</h1>
+            <p>Lorem Ipsum Dolor Sit, Amet Consectetur Adipisicing Elit. Voluptas Accusamus Tempore Temporibus Rem Amet Laudantium Animi Optio Voluptatum.</p>
+            <a href="#order" class="btn">Order Now</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://i.ibb.co/3M0Rg6X/burger.png" alt="Burger">
+        </div>
+    </section>
+
+    <section id="speciality" class="cards-section">
+        <h2>Our <span>Speciality</span></h2>
+        <div class="cards">
+            <div class="card">
+                <h3>🍔 Tasty Burger</h3>
+                <p>Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit.</p>
+            </div>
+            <div class="card">
+                <img src="https://i.ibb.co/mc4pgcf/pizza.png" alt="Pizza">
+            </div>
+            <div class="card">
+                <h3>🍦 Cold Ice-Cream</h3>
+                <p>Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit.</p>
+            </div>
+            <div class="card">
+                <h3>🥤 Cold Drinks</h3>
+                <p>Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit.</p>
+            </div>
+            <div class="card">
+                <h3>🎂 Tasty Sweets</h3>
+                <p>Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit.</p>
+            </div>
+            <div class="card">
+                <h3>🍳 Healty Breakfast</h3>
+                <p>Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit.</p>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
-<!-- ==== Updated Code End ==== -->
