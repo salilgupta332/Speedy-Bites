@@ -117,4 +117,4 @@ def register(request):
             return redirect('home')  # Redirect to home or wherever
     else:
         form = UserCreationForm()
-    return render(request, '/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
