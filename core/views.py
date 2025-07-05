@@ -71,3 +71,6 @@ def delete_menu_item(request, item_id):
     except MenuItem.DoesNotExist:
         return HttpResponse("Item not found", status=404)
 
+def landing_page(request):
+    return render(request, 'landing.html')
+
