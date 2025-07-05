@@ -7,6 +7,7 @@ import base64
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     # Fetch all menu items
