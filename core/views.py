@@ -106,3 +106,14 @@ def admin_register(request):
 
 def admin_dashboard(request):
     return render(request, "admin_dashboard.html")
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Automatically log the user in
+            return redirect('home')  # Redirect to home or wherever
+    else:
+        form = UserCreationForm()
+    return render(request, 'core/register.html', {'form': form})
