@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from .models import MenuItem
 from .forms import MenuItemForm
 from django.shortcuts import render, redirect
+import base64
 
 def home(request):
     # Fetch all menu items
@@ -15,17 +16,25 @@ def home(request):
 
 def add_menu_item(request):
     if request.method == 'POST':
-        form = MenuItemForm(request.POST)
+        form = MenuItemForm(request.POST, request.FILES)
         if form.is_valid():
+            image_file = request.FILES.get('image')
+            image_data = None
+
+            if image_file:
+                image_data = base64.b64encode(image_file.read()).decode('utf-8')
+
             MenuItem(
                 name=form.cleaned_data['name'],
                 description=form.cleaned_data['description'],
-                price=form.cleaned_data['price']
+                price=form.cleaned_data['price'],  # ✅ comma fixed here
+                image_data=image_data
             ).save()
             return redirect('home')
     else:
         form = MenuItemForm()
     return render(request, 'add_item.html', {'form': form})
+
 
 def delete_menu_item(request, item_id):
     item = MenuItem.objects.get(id=item_id)

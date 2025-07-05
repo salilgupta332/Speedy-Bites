@@ -1,26 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Speedy Bites - Menu</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
     <h1>🍽️ Speedy Bites Menu</h1>
 
-    <a href="{% url 'add_menu_item' %}">➕ Add New Item</a>
+    <div class="top-bar">
+        <a href="{% url 'add_menu_item' %}" class="add-btn">➕ Add New Item</a>
+    </div>
+
     <hr>
 
     {% if menu_items %}
-        <ul>
+        <div class="menu-grid">
             {% for item in menu_items %}
-                <li>
-                    <strong>{{ item.name }}</strong> - ₹{{ item.price }} <br>
-                    {{ item.description }} <br>
-                    <a href="{% url 'edit_menu_item' item.id %}">✏️ Edit</a> |
-                    <a href="{% url 'delete_menu_item' item.id %}">🗑️ Delete</a>
-                </li>
-                <br>
+                <div class="menu-card">
+                    {% if item.image_data %}
+                        <img src="data:image/png;base64,{{ item.image_data }}" alt="{{ item.name }}" class="dish-image"/>
+                    {% endif %}
+                    <h2>{{ item.name }}</h2>
+                    <p class="desc">{{ item.description }}</p>
+                    <p class="price">₹{{ item.price }}</p>
+                    <div class="actions">
+                        <a href="{% url 'edit_menu_item' item.id %}">✏️ Edit</a>
+                        <a href="{% url 'delete_menu_item' item.id %}">🗑️ Delete</a>
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p>No items yet. Add your first dish!</p>
     {% endif %}
