@@ -96,5 +96,5 @@ def register(request):
         form = AdminRegisterForm()
     return render(request, "register.html", {"form": form})
 
-def admin_landing(request):
-    return render(request, 'admin_landing.html')
+def admin_dashboard(request):
+    return render(request, 'admin_dashboard.html')
