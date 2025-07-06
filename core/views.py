@@ -8,6 +8,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.hashers import make_password
+from .models import User
+from .forms import RegisterForm
 
 def home(request):
     # Fetch all menu items
@@ -76,45 +79,17 @@ def delete_menu_item(request, item_id):
 def landing_page(request):
     return render(request, 'landing.html')
 
-def admin_login(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('admin_dashboard')
-        else:
-            messages.error(request, "Invalid username or password")
-
-    return render(request, "admin_login.html")
-
-def admin_register(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already taken")
-        else:
-            User.objects.create_user(username=username, email=email, password=password)
-            messages.success(request, "Admin registered successfully. You can now log in.")
-            return redirect('admin_login')
-
-    return render(request, "admin_register.html")
-
-def admin_dashboard(request):
-    return render(request, "admin_dashboard.html")
-
 def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  # Automatically log the user in
-            return redirect('home')  # Redirect to home or wherever
+            User(
+                username=form.cleaned_data["username"],
+                email=form.cleaned_data["email"],
+                password=make_password(form.cleaned_data["password"])
+            ).save()
+            messages.success(request, "Registration successful!")
+            return redirect("home")
     else:
-        form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+        form = RegisterForm()
+    return render(request, "register.html", {"form": form})
