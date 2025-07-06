@@ -5,12 +5,15 @@ from .forms import MenuItemForm
 from django.shortcuts import render, redirect
 import base64
 from django.contrib import messages
-from django.contrib.auth.models import User
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
 from .models import User
-from .forms import RegisterForm
+
+from .forms import AdminRegisterForm
+from .models import Admin_User
+
 
 def home(request):
     # Fetch all menu items
@@ -81,9 +84,9 @@ def landing_page(request):
 
 def register(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        form = AdminRegisterForm(request.POST)
         if form.is_valid():
-            User(
+            Admin_User(
                 username=form.cleaned_data["username"],
                 email=form.cleaned_data["email"],
                 password=make_password(form.cleaned_data["password"])
@@ -91,5 +94,5 @@ def register(request):
             messages.success(request, "Registration successful!")
             return redirect("home")
     else:
-        form = RegisterForm()
+        form = AdminRegisterForm()
     return render(request, "register.html", {"form": form})

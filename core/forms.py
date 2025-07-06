@@ -1,7 +1,7 @@
 # --- Step 3.1: MenuItem Form START ---
 
 from django import forms
-from .models import User
+from .models import Admin_User
 from core.models import MenuItem
 from django.core.exceptions import ValidationError
 
@@ -19,13 +19,13 @@ class RegisterForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        if User.objects(username=username).first():
+        if Admin_User.objects(username=username).first():
             raise ValidationError("Username already exists")
         return username
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        if User.objects(email=email).first():
+        if Admin_User.objects(email=email).first():
             raise ValidationError("Email already exists")
         return email
 
