@@ -17,9 +17,9 @@ import os
 from mongoengine import connect
 from urllib.parse import quote_plus
 
-MONGO_USERNAME = quote_plus(os.getenv('MONGO_USERNAME'))
-MONGO_PASSWORD = quote_plus(os.getenv('MONGO_PASSWORD'))
-MONGO_CLUSTER = os.getenv('MONGO_CLUSTER')
+MONGO_USERNAME = quote_plus(os.getenv('salilgupta332'))
+MONGO_PASSWORD = quote_plus(os.getenv('speedy123'))
+MONGO_CLUSTER = os.getenv('Cluster0')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
