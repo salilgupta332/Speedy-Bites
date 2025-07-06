@@ -1,9 +1,9 @@
 # --- Step 3.1: MenuItem Form START ---
-
 from django import forms
 from .models import Admin_User
-from core.models import MenuItem
 from django.core.exceptions import ValidationError
+
+from core.models import MenuItem
 
 class MenuItemForm(forms.Form):
     name = forms.CharField(label='Dish Name', max_length=100)
@@ -11,7 +11,7 @@ class MenuItemForm(forms.Form):
     price = forms.FloatField(label='Price (₹)')
     image = forms.ImageField(required=False)
 
-class RegisterForm(forms.Form):
+class AdminRegisterForm(forms.Form):
     username = forms.CharField(max_length=100)
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
