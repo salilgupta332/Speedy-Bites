@@ -90,7 +90,7 @@ def admin_register(request):
             Admin_User(
                 username=form.cleaned_data['username'],
                 email=form.cleaned_data['email'],
-                password=form.cleaned_data['password']
+                password=make_password(form.cleaned_data['password'])  # 🔐 hashed
             ).save()
             messages.success(request, 'Registration successful! You can now log in.')
             return redirect('admin_register')  # or redirect to 'login'
