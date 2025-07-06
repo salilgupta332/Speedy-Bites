@@ -1,47 +1,104 @@
-/* static/css/admin_register.css */
+/* admin_register.css */
+
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #f4f4f8;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f4ff, #dbe8ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
+/* Form Container */
 .form-container {
-    max-width: 400px;
-    margin: 80px auto;
-    padding: 30px;
-    background: #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    border-radius: 10px;
-}
-
-h2 {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
     text-align: center;
+}
+
+/* Heading */
+.form-container h2 {
+    color: #2c3e50;
     margin-bottom: 25px;
-    color: #333;
+    font-size: 28px;
 }
 
-form input {
+/* Django form elements */
+form p {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+form label {
+    display: block;
+    margin-bottom: 6px;
+    color: #34495e;
+    font-weight: 600;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
+    padding: 10px 14px;
     border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #f9f9f9;
+    transition: 0.3s border-color;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background: #4a69bd;
+form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Submit Button */
+button[type="submit"] {
+    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-weight: bold;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
 }
 
-button:hover {
-    background: #1e3799;
+button[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
+/* Success Message */
 .success {
-    color: green;
-    text-align: center;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #c3e6cb;
+}
+
+/* Login Link */
+p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+p a:hover {
+    text-decoration: underline;
 }
