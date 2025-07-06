@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-
+from .models import Admin_User
 from mongoengine import Document, StringField, FloatField , EmailField
 
 class TestModel(Document):

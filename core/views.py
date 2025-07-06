@@ -9,8 +9,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
-from .models import User
-
 from .forms import AdminRegisterForm
 from .models import Admin_User
 
