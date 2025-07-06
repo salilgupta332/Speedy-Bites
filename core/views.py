@@ -40,7 +40,7 @@ def add_menu_item(request):
             return redirect('home')
     else:
         form = MenuItemForm()
-    return render(request, 'add_item.html', {'form': form})
+    return render(request, 'core/add_item.html', {'form': form})
 
 
 def delete_menu_item(request, item_id):
