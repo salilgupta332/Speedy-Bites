@@ -1,13 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/admin_landing.css' %}">
+    <meta charset="UTF-8">
+    <title>Welcome Admin</title>
+    <link rel="stylesheet" href="{% static 'core/css/admin_landing.css' %}">
 </head>
 <body>
-    <h1>Welcome, Admin!</h1>
-    <p>This is the admin dashboard.</p>
-    <a href="{% url 'logout' %}">Logout</a>
+    <div class="container">
+        <h1>Welcome, {{ request.user.username }} 👋</h1>
+        <p>Glad to see you back in control.</p>
+
+        <div class="cards">
+            <a href="{% url 'add_item' %}" class="card">🍔 Add Menu Item</a>
+            <a href="#" class="card">📋 View Orders</a>
+            <a href="#" class="card">📦 Inventory</a>
+            <a href="{% url 'logout' %}" class="card logout">🚪 Logout</a>
+        </div>
+    </div>
 </body>
 </html>
