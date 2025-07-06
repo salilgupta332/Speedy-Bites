@@ -15,7 +15,7 @@ class MenuItem(Document):
     def __str__(self):
         return self.name
 
-class User(Document):
+class Admin_User(Document):
     username = StringField(required=True, unique=True)
     email = EmailField(required=True, unique=True)
     password = StringField(required=True)
