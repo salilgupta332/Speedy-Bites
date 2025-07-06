@@ -11,7 +11,7 @@ class MenuItemForm(forms.Form):
     price = forms.FloatField(label='Price (₹)')
     image = forms.ImageField(required=False)
 
-class AdminRegisterForm(forms.Form):
+class AdminRegistrationForm(forms.Form):
     username = forms.CharField(max_length=100)
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
