@@ -11,6 +11,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
 from .forms import AdminRegisterForm
 from .models import Admin_User
+from .forms import AdminRegistrationForm
+
 
 
 
@@ -81,20 +83,21 @@ def delete_menu_item(request, item_id):
 def landing_page(request):
     return render(request, 'landing.html')
 
-def register(request):
-    if request.method == "POST":
-        form = AdminRegisterForm(request.POST)
+def admin_register(request):
+    if request.method == 'POST':
+        form = AdminRegistrationForm(request.POST)
         if form.is_valid():
             Admin_User(
-                username=form.cleaned_data["username"],
-                email=form.cleaned_data["email"],
-                password=make_password(form.cleaned_data["password"])
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password']
             ).save()
-            messages.success(request, "Registration successful!")
-            return redirect("home")
+            messages.success(request, 'Registration successful! You can now log in.')
+            return redirect('admin_register')  # or redirect to 'login'
     else:
-        form = AdminRegisterForm()
-    return render(request, "register.html", {"form": form})
+        form = AdminRegistrationForm()
+
+    return render(request, 'admin_register.html', {'form': form})
 
 def admin_dashboard(request):
     return render(request, 'admin_dashboard.html')

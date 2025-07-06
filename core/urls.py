@@ -1,7 +1,7 @@
 # core/urls.py
 
 from django.urls import path
-from .views import home, landing_page, add_menu_item, edit_menu_item, delete_menu_item
+from .views import home, landing_page, add_menu_item, edit_menu_item, delete_menu_item , admin_register
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('admin-panel/', views.admin_dashboard, name='admin_dashboard'),
+    path('admin-register/', admin_register, name='admin_register'),
 ]

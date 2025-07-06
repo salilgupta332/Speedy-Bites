@@ -1,0 +1,26 @@
+<!-- core/templates/admin_register.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Register</title>
+    <link rel="stylesheet" href="{% static 'css/admin_register.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Admin Registration</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="success">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+        <p>Already registered? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>
