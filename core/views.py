@@ -11,6 +11,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
 from .forms import AdminRegisterForm
 from .models import Admin_User
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -94,3 +95,6 @@ def register(request):
     else:
         form = AdminRegisterForm()
     return render(request, "register.html", {"form": form})
+
+def admin_landing(request):
+    return render(request, 'admin_landing.html')
