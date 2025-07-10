@@ -15,13 +15,9 @@ from .models import Admin_User
 
 
 
-
-def home(request):
-    # Fetch all menu items
+def menu_dashboard(request):
     items = MenuItem.objects()
-    
-    # Pass data to the template
-    return render(request, 'home.html', {'menu_items': items})
+    return render(request, 'admin/menu_dashboard.html', {'menu_items': items})
 
 def add_menu_item(request):
     if request.method == 'POST':
