@@ -72,7 +72,7 @@ def delete_menu_item(request, item_id):
     try:
         item = MenuItem.objects.get(id=item_id)
         item.delete()
-        return redirect('home')
+        return redirect('menu_dashboard')
     except MenuItem.DoesNotExist:
         return HttpResponse("Item not found", status=404)
 
