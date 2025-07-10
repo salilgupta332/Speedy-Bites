@@ -39,7 +39,7 @@ def add_menu_item(request):
                 price=form.cleaned_data['price'],  # ✅ comma fixed here
                 image_data=image_data
             ).save()
-            return redirect('home')
+            return redirect('menu_dashboard')
     else:
         form = MenuItemForm()
     return render(request, 'core/add_item.html', {'form': form})
@@ -61,7 +61,7 @@ def edit_menu_item(request, item_id):
             item.price = form.cleaned_data['price']
             item.description = form.cleaned_data['description']
             item.save()
-            return redirect('home')
+            return redirect('menu_dashboard')
     else:
         # Pre-fill the form manually
         form = MenuItemForm(initial={
