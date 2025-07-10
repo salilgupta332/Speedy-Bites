@@ -14,7 +14,7 @@ urlpatterns = [
     path('delete/<str:item_id>/', delete_menu_item, name='delete_menu_item'),
     
     
-    # path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('admin-panel/', views.admin_dashboard, name='admin_dashboard'),
     path('admin-register/', admin_register, name='admin_register'),
     path('admin/', include('core.admin_urls')),
