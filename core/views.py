@@ -38,13 +38,13 @@ def add_menu_item(request):
             return redirect('menu_dashboard')
     else:
         form = MenuItemForm()
-    return render(request, 'core/add_item.html', {'form': form})
+    return render(request, 'admin/add_item.html', {'form': form})
 
 
 def delete_menu_item(request, item_id):
     item = MenuItem.objects.get(id=item_id)
     item.delete()
-    return redirect('home')
+    return redirect('menu_dashboard')
 
 
 def edit_menu_item(request, item_id):
@@ -66,7 +66,7 @@ def edit_menu_item(request, item_id):
             'description': item.description,
         })
 
-    return render(request, 'edit_item.html', {'form': form})
+    return render(request, 'admin/edit_item.html', {'form': form})
 
 def delete_menu_item(request, item_id):
     try:
