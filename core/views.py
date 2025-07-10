@@ -123,4 +123,4 @@ def admin_login(request):
         except Admin_User.DoesNotExist:
             messages.error(request, "User not found")
     
-    return render(request, 'admin_login.html')
+    return render(request, 'admin/admin_login.html')
