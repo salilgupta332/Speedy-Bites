@@ -13,8 +13,8 @@ urlpatterns = [
     path('edit/<str:item_id>/', edit_menu_item, name='edit_menu_item'),
     path('delete/<str:item_id>/', delete_menu_item, name='delete_menu_item'),
     
-    path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    
+    # path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('admin-panel/', views.admin_dashboard, name='admin_dashboard'),
     path('admin-register/', admin_register, name='admin_register'),
     path('admin/', include('core.admin_urls')),
