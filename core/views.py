@@ -83,6 +83,9 @@ def delete_menu_item(request, item_id):
 def landing_page(request):
     return render(request, 'landing.html')
 
+def admin_dashboard(request):
+    return render(request, 'admin/admin_dashboard.html')
+
 def admin_register(request):
     if request.method == 'POST':
         form = AdminRegistrationForm(request.POST)
@@ -97,7 +100,27 @@ def admin_register(request):
     else:
         form = AdminRegistrationForm()
 
-    return render(request, 'admin_register.html', {'form': form})
+    return render(request, 'admin/admin_register.html', {'form': form})
 
-def admin_dashboard(request):
-    return render(request, 'admin_dashboard.html')
+
+
+from django.contrib.auth.hashers import check_password
+
+def admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = Admin_User.objects.get(username=username)
+            if check_password(password, user.password):
+                # ✅ Login success - store session
+                request.session['admin_logged_in'] = True
+                messages.success(request, "Login successful!")
+                return redirect('admin_dashboard')
+            else:
+                messages.error(request, "Invalid password")
+        except Admin_User.DoesNotExist:
+            messages.error(request, "User not found")
+    
+    return render(request, 'admin_login.html')
