@@ -5,7 +5,7 @@ from .forms import MenuItemForm
 from django.shortcuts import render, redirect
 import base64
 from django.contrib import messages
-
+from core.utils import admin_login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
@@ -13,8 +13,12 @@ from django.contrib.auth.hashers import make_password
 from .forms import AdminRegistrationForm
 from .models import Admin_User
 
+@admin_login_required
+def menu_dashboard(request):
+    items = MenuItem.objects()
+    return render(request, 'admin/menu_dashboard.html', {'menu_items': items})
 
-
+@admin_login_required
 def menu_dashboard(request):
     items = MenuItem.objects()
     return render(request, 'admin/menu_dashboard.html', {'menu_items': items})
@@ -120,3 +124,9 @@ def admin_login(request):
             messages.error(request, "User not found")
     
     return render(request, 'admin/admin_login.html')
+
+def admin_logout(request):
+    print("Before logout:", request.session.items()) 
+    request.session.flush()  # Clears all session data
+    print("After logout:", request.session.items())
+    return redirect('admin_login')  
