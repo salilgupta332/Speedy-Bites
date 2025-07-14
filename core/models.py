@@ -19,3 +19,8 @@ class Admin_User(Document):
     username = StringField(required=True, unique=True)
     email = EmailField(required=True, unique=True)
     password = StringField(required=True)
+
+class SiteUser(Document):
+    username = StringField(required=True, unique=True)
+    email = StringField(required=True, unique=True)
+    password = StringField(required=True)

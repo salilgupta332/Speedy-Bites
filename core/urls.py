@@ -18,4 +18,6 @@ urlpatterns = [
     path('admin-panel/', views.admin_dashboard, name='admin_dashboard'),
     path('admin-register/', admin_register, name='admin_register'),
     path('admin/', include('core.admin_urls')),
+    path('user/register/', views.user_register, name='user_register'),
+    path('user/login/', views.user_login, name='user_login'),
 ]

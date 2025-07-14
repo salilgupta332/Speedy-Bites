@@ -12,6 +12,8 @@ from django.contrib.auth.hashers import make_password
 
 from .forms import AdminRegistrationForm
 from .models import Admin_User
+from .models import SiteUser
+from .forms import UserRegisterForm, UserLoginForm
 
 @admin_login_required
 def menu_dashboard(request):
@@ -130,3 +132,36 @@ def admin_logout(request):
     request.session.flush()  # Clears all session data
     print("After logout:", request.session.items())
     return redirect('admin_login')  
+
+# --- Step 3: User Auth Views START ---
+
+def user_register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            SiteUser(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password']
+            ).save()
+            messages.success(request, 'Registration successful! Please login.')
+            return redirect('user_login')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'user/user_register.html', {'form': form})
+
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            user = SiteUser.objects(username=form.cleaned_data['username'], password=form.cleaned_data['password']).first()
+            if user:
+                request.session['user_logged_in'] = True
+                request.session['username'] = user.username
+                return redirect('landing_page')  # or wherever
+            else:
+                messages.error(request, 'Invalid credentials')
+    else:
+        form = UserLoginForm()
+    return render(request, 'user/user_login.html', {'form': form})
+# --- Step 3: User Auth Views END ---
