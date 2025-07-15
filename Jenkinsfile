@@ -5,7 +5,7 @@ pipeline {
         stage('Code') {
             steps {
                 echo 'This is Developing code'
-                git url: "https://github.com/salilgupta332/Speedy-Bites.git" , branch: "main"
+                git url: "https://github.com/salilgupta332/Speedy-Bites.git" , branch: "dev"
             }
         }
         stage('Build') {
