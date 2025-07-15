@@ -158,7 +158,7 @@ def user_login(request):
             if user:
                 request.session['user_logged_in'] = True
                 request.session['username'] = user.username
-                return redirect('landing_page')  # or wherever
+                return redirect('landing')  # or wherever
             else:
                 messages.error(request, 'Invalid credentials')
     else:
