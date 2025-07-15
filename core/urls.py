@@ -29,7 +29,6 @@ urlpatterns = [
     path('admin-register/', admin_register, name='admin_register'),
 
     # Admin and User routes
-    
-    path('register/', user_register, name='user_register'),
-    path('login/', user_login, name='user_login'),
+    path('admin/', include('core.admin_urls')),
+    path('user/', include('core.user_urls')),
 ]
