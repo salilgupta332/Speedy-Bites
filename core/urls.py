@@ -30,6 +30,6 @@ urlpatterns = [
 
     # Admin and User routes
     
-    path('user/register/', user_register, name='user_register'),
-    path('user/login/', user_login, name='user_login'),
+    path('register/', user_register, name='user_register'),
+    path('login/', user_login, name='user_login'),
 ]
