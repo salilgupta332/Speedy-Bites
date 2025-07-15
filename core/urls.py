@@ -10,9 +10,12 @@ from .views import (
 )
 from . import views
 from django.contrib.auth import views as auth_views
+from django.http import HttpResponse
+def test(request):
+    return HttpResponse("Core URLs working")
 
 urlpatterns = [
-    
+    path('test/', test),
     path('', landing_page, name='landing'),
 
     # Menu routes (admin)
