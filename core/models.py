@@ -25,3 +25,4 @@ class SiteUser(Document):
     email = StringField(required=True, unique=True)
     password = StringField(required=True)
     mobile = StringField(required=True, unique=True)
+    otp = StringField()
