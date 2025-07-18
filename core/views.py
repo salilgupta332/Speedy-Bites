@@ -142,7 +142,8 @@ def user_register(request):
             SiteUser(
                 username=form.cleaned_data['username'],
                 email=form.cleaned_data['email'],
-                password=form.cleaned_data['password']
+                password=form.cleaned_data['password'],
+                mobile=form.cleaned_data['mobile']
             ).save()
             messages.success(request, 'Registration successful! Please login.')
             return redirect('user_login')

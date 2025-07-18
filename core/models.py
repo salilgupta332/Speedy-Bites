@@ -24,3 +24,4 @@ class SiteUser(Document):
     username = StringField(required=True, unique=True)
     email = StringField(required=True, unique=True)
     password = StringField(required=True)
+    mobile = StringField(required=True, unique=True)
