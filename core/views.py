@@ -9,11 +9,11 @@ from core.utils import admin_login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
-
 from .forms import AdminRegistrationForm
 from .models import Admin_User
 from .models import SiteUser
 from .forms import UserRegisterForm, UserLoginForm
+import random
 
 @admin_login_required
 def menu_dashboard(request):
@@ -165,3 +165,81 @@ def user_login(request):
         form = UserLoginForm()
     return render(request, 'user/user_login.html', {'form': form})
 # --- Step 3: User Auth Views END ---
+
+def reset_password(request, token):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        user = SiteUser.objects(token=token).first()
+        if user:
+            user.password = new_password  # ⚠️ ideally hash it
+            user.token = None  # clear token
+            user.save()
+            messages.success(request, 'Password reset successful. Please log in.')
+            return redirect('user_login')
+        else:
+            messages.error(request, 'Invalid or expired token.')
+            return redirect('forgot_password')
+
+    return render(request, 'user/reset_password.html', {'token': token})
+
+def send_otp_view(request):
+    if request.method == 'POST':
+        mobile = request.POST.get('mobile')
+        try:
+            user = SiteUser.objects.get(mobile=mobile)
+            otp = str(random.randint(100000, 999999))  # Generate 6-digit OTP
+            user.otp = otp
+            user.save()
+            print(f"Generated OTP for {mobile}: {otp}")  # Simulate SMS sending
+            request.session['mobile'] = mobile
+            return redirect('verify_otp')  # move to step 3
+        except SiteUser.DoesNotExist:
+            messages.error(request, "Mobile number not registered.")
+    return render(request, 'user/send_otp.html')
+
+
+def verify_otp_view(request):
+    if request.method == 'POST':
+        entered_otp = request.POST.get('otp')
+        mobile = request.session.get('mobile')
+
+        if not mobile:
+            messages.error(request, "Session expired. Please try again.")
+            return redirect('send_otp')
+
+        try:
+            user = SiteUser.objects.get(mobile=mobile)
+            if user.otp == entered_otp:
+                messages.success(request, "OTP verified successfully!")
+                return redirect('reset_password')  # Step 4
+            else:
+                messages.error(request, "Invalid OTP.")
+        except SiteUser.DoesNotExist:
+            messages.error(request, "User not found.")
+            return redirect('send_otp')
+
+    return render(request, 'user/verify_otp.html')
+
+# core/views.py
+
+def reset_password_view(request):
+    mobile = request.session.get('mobile')
+    
+    if not mobile:
+        messages.error(request, "Session expired. Please request a new OTP.")
+        return redirect('send_otp')
+
+    if request.method == 'POST':
+        new_password = request.POST.get('password')
+
+        try:
+            user = SiteUser.objects.get(mobile=mobile)
+            user.password = new_password
+            user.save()
+            messages.success(request, "Password reset successfully. Please log in.")
+            return redirect('user_login')
+        except SiteUser.DoesNotExist:
+            messages.error(request, "User not found.")
+            return redirect('send_otp')
+
+    return render(request, 'user/reset_password.html')

@@ -1,20 +1,27 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>User Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user_login.css' %}">
 </head>
 <body>
-    <h2>User Login</h2>
-    {% if messages %}
-        {% for msg in messages %}
-            <p style="color: red">{{ msg }}</p>
-        {% endfor %}
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+    <div class="login-container">
+        <form method="POST">
+            {% csrf_token %}
+            <h2>User Login</h2>
+            {% if messages %}
+                {% for msg in messages %}
+                    <p style="color: red">{{ msg }}</p>
+                {% endfor %}
+            {% endif %}
+            {{ form.as_p }}
+            
+            <button type="submit">Login</button>
+            <!-- Inside your login form -->
+            <a href="{% url 'reset_password' %}" class="forgot-password">Forgot Password?</a>
+
+        </form>
+    </div>
 </body>
 </html>

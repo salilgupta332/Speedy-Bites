@@ -1,0 +1,22 @@
+<!-- core/templates/user/send_otp.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forgot Password - Enter Mobile</title>
+</head>
+<body>
+    <h2>Forgot Password</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="mobile">Enter your registered mobile number:</label><br>
+        <input type="text" name="mobile" required><br><br>
+        <input type="submit" value="Send OTP">
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color:red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
