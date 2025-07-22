@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.core.mail import EmailMessage
 import random
 
 def admin_login_required(view_func):
