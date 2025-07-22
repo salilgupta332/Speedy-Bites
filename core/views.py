@@ -13,7 +13,15 @@ from .forms import AdminRegistrationForm
 from .models import Admin_User
 from .models import SiteUser
 from .forms import UserRegisterForm, UserLoginForm
+from core.models import SiteUser
+from django.urls import reverse
+from django.core.mail import send_mail 
+from django.conf import settings
+import uuid
+from core.utils import generate_otp, send_otp_email
 import random
+from django.contrib.auth.hashers import make_password
+import bcrypt
 
 @admin_login_required
 def menu_dashboard(request):
@@ -167,80 +175,176 @@ def user_login(request):
     return render(request, 'user/user_login.html', {'form': form})
 # --- Step 3: User Auth Views END ---
 
-def reset_password(request, token):
+def user_login(request):
     if request.method == 'POST':
-        new_password = request.POST.get('new_password')
-        user = SiteUser.objects(token=token).first()
-        if user:
-            user.password = new_password  # ⚠️ ideally hash it
-            user.token = None  # clear token
-            user.save()
-            messages.success(request, 'Password reset successful. Please log in.')
-            return redirect('user_login')
-        else:
-            messages.error(request, 'Invalid or expired token.')
-            return redirect('forgot_password')
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            entered_password = form.cleaned_data['password']
 
-    return render(request, 'user/reset_password.html', {'token': token})
+            user = SiteUser.objects(username=username).first()
+            if user:
+                try:
+                    if bcrypt.checkpw(entered_password.encode('utf-8'), user.password.encode('utf-8')):
+                        request.session['user_logged_in'] = True
+                        request.session['username'] = user.username
+                        return redirect('landing')
+                except ValueError:
+                    # Fallback: assume password was stored as plain text (not secure!)
+                    if user.password == entered_password:
+                        # Auto-upgrade to hashed version
+                        hashed = bcrypt.hashpw(entered_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                        user.password = hashed
+                        user.save()
+                        request.session['user_logged_in'] = True
+                        request.session['username'] = user.username
+                        return redirect('landing')
+
+            messages.error(request, 'Invalid credentials')
+    else:
+        form = UserLoginForm()
+    return render(request, 'user/user_login.html', {'form': form})
+
+
+# --- Step 3: User Auth Views END ---
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        try:
+            user = SiteUser.objects.get(email=email)
+
+            # ✅ Generate token
+            token = str(uuid.uuid4())
+            user.token = token
+            user.save()
+
+            # ✅ Create reset link
+            reset_link = request.build_absolute_uri(
+                reverse('reset_password', args=[token])
+            )
+
+            # ✅ Send reset link (you can replace this with your own email system)
+            send_mail(
+                subject='Reset Your Password',
+                message=f'Click here to reset your password: {reset_link}',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
+            return render(request, 'user/forgot_password.html', {'message': 'Password reset link sent to your email.'})
+        
+        except SiteUser.DoesNotExist:
+            return render(request, 'user/forgot_password.html', {'message': 'Email not found'})
+    
+    return render(request, 'user/send_otp.html')
+
+
 
 def send_otp_view(request):
     if request.method == 'POST':
-        mobile = request.POST.get('mobile')
+        email = request.POST.get('email')
         try:
-            user = SiteUser.objects.get(mobile=mobile)
+            user = SiteUser.objects.get(email=email)
             otp = str(random.randint(100000, 999999))  # Generate 6-digit OTP
             user.otp = otp
             user.save()
-            print(f"Generated OTP for {mobile}: {otp}")  # Simulate SMS sending
-            request.session['mobile'] = mobile
-            return redirect('verify_otp')  # move to step 3
+
+            # Simulate email sending
+            send_mail(
+                subject='Your OTP for Password Reset',
+                message=f'Your OTP is: {otp}',
+                from_email='noreply@speedybites.com',
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
+            # Store OTP and email in session
+            request.session['otp'] = otp
+            request.session['reset_email'] = email
+            request.session.set_expiry(300)  # OTP valid for 5 minutes
+
+            print(f"Generated OTP for {email}: {otp}")
+            return redirect('verify_otp_email')  # this must match your URL name
         except SiteUser.DoesNotExist:
-            messages.error(request, "Mobile number not registered.")
+            messages.error(request, "Email address not registered.")
+    
     return render(request, 'user/send_otp.html')
 
 
 def verify_otp_view(request):
-    if request.method == 'POST':
-        entered_otp = request.POST.get('otp')
-        mobile = request.session.get('mobile')
-
-        if not mobile:
-            messages.error(request, "Session expired. Please try again.")
-            return redirect('send_otp')
-
-        try:
-            user = SiteUser.objects.get(mobile=mobile)
-            if user.otp == entered_otp:
-                messages.success(request, "OTP verified successfully!")
-                return redirect('reset_password')  # Step 4
-            else:
-                messages.error(request, "Invalid OTP.")
-        except SiteUser.DoesNotExist:
-            messages.error(request, "User not found.")
-            return redirect('send_otp')
-
-    return render(request, 'user/verify_otp.html')
-
-# core/views.py
-
-def reset_password_view(request):
-    mobile = request.session.get('mobile')
-    
-    if not mobile:
+    if not request.session.get('otp') or not request.session.get('reset_email'):
         messages.error(request, "Session expired. Please request a new OTP.")
         return redirect('send_otp')
 
     if request.method == 'POST':
-        new_password = request.POST.get('password')
+        entered_otp = request.POST.get('otp')
+        stored_otp = request.session.get('otp')
 
-        try:
-            user = SiteUser.objects.get(mobile=mobile)
-            user.password = new_password
-            user.save()
-            messages.success(request, "Password reset successfully. Please log in.")
-            return redirect('user_login')
-        except SiteUser.DoesNotExist:
-            messages.error(request, "User not found.")
-            return redirect('send_otp')
+        if entered_otp == stored_otp:
+            request.session['otp_verified'] = True
+            return redirect('reset_password')
+        else:
+            messages.error(request, "Invalid OTP")
+            return redirect('verify_otp_email')
+
+    return render(request, 'user/verify_otp_email.html')
+
+def reset_password_view(request):
+    email = request.session.get('reset_email')
+
+    if not request.session.get('otp_verified'):  # ✅ Prevent access without verification
+        messages.error(request, "Access denied. Please verify OTP first.")
+        return redirect('send_otp_email')
+
+    if request.method == 'POST':
+        new_password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password == confirm_password:
+            try:
+                user = SiteUser.objects.get(email=email)
+
+                # ✅ Hash with bcrypt, compatible with your login logic
+                hashed = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                user.password = hashed
+                user.save()
+
+                messages.success(request, "Password reset successfully.")
+                request.session.pop('otp_verified', None)
+                return redirect('user_login')
+            except SiteUser.DoesNotExist:
+                messages.error(request, "User not found.")
+                return redirect('forgot_password')
+        else:
+            messages.error(request, "Passwords do not match.")
 
     return render(request, 'user/reset_password.html')
+
+
+def send_otp_email_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email', '').strip()
+        print(f"[DEBUG] Submitted email: {email}")
+
+        # Debug: Show all registered SiteUser emails
+        print("[DEBUG] SiteUser emails in DB:")
+        for user in SiteUser.objects.all():
+            print(user.email)
+
+        try:
+            user = SiteUser.objects.get(email__iexact=email)
+        except SiteUser.DoesNotExist:
+            messages.error(request, "Email not registered.")
+            return redirect('send_otp')
+
+        otp = generate_otp()
+        request.session['email_otp'] = otp
+        request.session['reset_email'] = email
+
+        send_otp_email(email, otp)
+        messages.success(request, "OTP sent to your email.")
+        return redirect('verify_otp_email')
+
+    return render(request, 'user/send_otp.html')

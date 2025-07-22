@@ -22,7 +22,7 @@ urlpatterns = [
     path('add/', add_menu_item, name='add_menu_item'),
     path('edit/<str:item_id>/', edit_menu_item, name='edit_menu_item'),
     path('delete/<str:item_id>/', delete_menu_item, name='delete_menu_item'),
-    path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
+    
 
     # Auth
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
@@ -32,4 +32,5 @@ urlpatterns = [
     # Admin and User routes
     path('admin/', include('core.admin_urls')),
     path('user/', include('core.user_urls')),
+
 ]

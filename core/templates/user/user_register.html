@@ -3,18 +3,28 @@
 <html>
 <head>
     <title>User Register</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user_register.css' %}">
 </head>
 <body>
-    <h2>User Register</h2>
-    {% if messages %}
-        {% for msg in messages %}
-            <p style="color: green">{{ msg }}</p>
-        {% endfor %}
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+    <div class="register-container">
+        <form method="POST">
+            {% csrf_token %}
+            <h2>User Register</h2>
+
+            {% if messages %}
+                {% for msg in messages %}
+                    <p style="color: green">{{ msg }}</p>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.as_p }}
+
+            <button type="submit">Register</button>
+
+            <div class="links bottom-link">
+                Already have an account? <a href="{% url 'user_login' %}">Login</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
