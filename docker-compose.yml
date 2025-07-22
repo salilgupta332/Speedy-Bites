@@ -14,4 +14,5 @@ services:
       - MONGO_CLUSTER=cluster0.icd6aqk.mongodb.net
     volumes:
       - .:/app
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py migrate && gunicorn speedy_bites.wsgi:application --bind 0.0.0.0:8000"
