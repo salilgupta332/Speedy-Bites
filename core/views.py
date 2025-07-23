@@ -188,6 +188,8 @@ def user_login(request):
                     if bcrypt.checkpw(entered_password.encode('utf-8'), user.password.encode('utf-8')):
                         request.session['user_logged_in'] = True
                         request.session['username'] = user.username
+                        request.session['user_id'] = str(user.id) 
+                        request.session['user_name'] = user.username
                         return redirect('landing')
                 except ValueError:
                     # Fallback: assume password was stored as plain text (not secure!)
@@ -198,6 +200,8 @@ def user_login(request):
                         user.save()
                         request.session['user_logged_in'] = True
                         request.session['username'] = user.username
+                        request.session['user_id'] = str(user.id) 
+                        request.session['user_name'] = user.username
                         return redirect('landing')
 
             messages.error(request, 'Invalid credentials')
