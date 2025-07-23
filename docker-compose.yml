@@ -13,6 +13,6 @@ services:
       - MONGO_PASSWORD=Speedy123
       - MONGO_CLUSTER=cluster0.icd6aqk.mongodb.net
     volumes:
-      - .:/app
+       - ./static:/app/static
     command: >
       sh -c "python manage.py migrate && gunicorn speedy_bites.wsgi:application --bind 0.0.0.0:8000"
