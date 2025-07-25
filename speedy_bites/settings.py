@@ -38,7 +38,11 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # for collectstatic
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Application definition
 
