@@ -171,18 +171,7 @@ body {
   color: white;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 110%; /* push dropdown below the button */
-  right: 0;
-  background-color: white;
-  min-width: 140px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  overflow: hidden;
-  z-index: 1001;
-}
+
 
 .dropdown-content a {
   color: #333;
