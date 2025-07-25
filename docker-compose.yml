@@ -4,8 +4,6 @@ services:
   web:
     image: devops22003/speedy-bites:latest
     container_name: speedy_bites_web
-    ports:
-      - "8000:8000"
     environment:
       - DJANGO_ALLOWED_HOSTS=*
       - DJANGO_SECRET_KEY=super-secret-key
@@ -13,6 +11,26 @@ services:
       - MONGO_PASSWORD=Speedy123
       - MONGO_CLUSTER=cluster0.icd6aqk.mongodb.net
     volumes:
-       - ./static:/app/static
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
     command: >
-      sh -c "python manage.py migrate && gunicorn speedy_bites.wsgi:application --bind 0.0.0.0:8000"
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn speedy_bites.wsgi:application --bind 0.0.0.0:8000"
+
+  nginx:
+    image: nginx:latest
+    container_name: speedy_bites_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
+  media_volume:
