@@ -284,55 +284,80 @@ body {
 }
 
 
-.speciality .box-container{
-  display: flex;
-  flex-wrap: wrap;
-  gap:1.5rem;
+.speciality {
+  padding: 5rem 9%;
+  background-color: #fff;
+  text-align: center;
 }
 
-.speciality .box-container .box{
-  flex:1 1 30rem;
+.speciality .heading {
+  font-size: 3.5rem;
+  color: #333;
+  margin-bottom: 4rem;
+}
+
+.speciality .heading span {
+  color: var(--red);
+}
+
+.speciality .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.speciality .box {
   position: relative;
   overflow: hidden;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
-  border:.1rem solid rgba(0,0,0,.3);
-  cursor: pointer;
-  border-radius: .5rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.speciality .box-container .box .image{
-  height:100%;
-  width:100%;
+.speciality .box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.speciality .box .image {
+  width: 100%;
+  height: 200px;
   object-fit: cover;
-  position: absolute;
-  top:-100%; left:0;
 }
 
-.speciality .box-container .box .content{
-  text-align: center;
-  background:#fff;
-  padding:2rem;
+.speciality .box .content {
+  padding: 2rem;
 }
 
-.speciality .box-container .box .content img{
-  margin:1.5rem 0;
+.speciality .box .content img {
+  height: 50px;
+  margin-bottom: 1rem;
 }
 
-.speciality .box-container .box .content h3{
-  font-size: 2.5rem;
-  color:#333;
+.speciality .box .content h3 {
+  font-size: 2rem;
+  color: #333;
+  margin: 1rem 0;
 }
 
-.speciality .box-container .box .content p{
-  font-size: 1.6rem;
-  color:#666;
-  padding:1rem 0;
+.speciality .box .content p {
+  font-size: 1.4rem;
+  color: #666;
+  line-height: 1.6;
 }
 
-.speciality .box-container .box:hover .image{
-  top:0;
-}
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .speciality .heading {
+    font-size: 2.5rem;
+  }
 
-.speciality .box-container .box:hover .content{
-  transform: translateY(100%);
+  .speciality .box .content h3 {
+    font-size: 1.6rem;
+  }
+
+  .speciality .box .content p {
+    font-size: 1.2rem;
+  }
 }
