@@ -11,6 +11,7 @@ urlpatterns = [
     path('send-otp/', views.send_otp_view, name='send_otp_email'),
     path('verify-otp/', views.verify_otp_view, name='verify_otp_email'),
     path('reset-password/', views.reset_password_view, name='reset_password'),
+    path('logout/', views.user_logout, name='user_logout'),
     
     # You can add more user-specific routes here in the future
 ]

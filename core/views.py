@@ -208,6 +208,10 @@ def user_login(request):
         form = UserLoginForm()
     return render(request, 'user/user_login.html', {'form': form})
 
+def user_logout(request):
+    request.session.flush()
+    return redirect('landing')
+
 
 # --- Step 3: User Auth Views END ---
 
