@@ -91,7 +91,13 @@ def delete_menu_item(request, item_id):
         return HttpResponse("Item not found", status=404)
 
 def landing_page(request):
-    return render(request, 'landing.html')
+   def landing_page(request):
+    try:
+        print("[DEBUG] session:", request.session.items())
+        return render(request, 'landing.html')
+    except Exception as e:
+        print("[ERROR] Landing page crash:", e)
+        return HttpResponse("Internal Server Error in landing page", status=500)
 
 def admin_dashboard(request):
     return render(request, 'admin/admin_dashboard.html')
