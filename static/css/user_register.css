@@ -1,0 +1,95 @@
+/* --- user_register.css --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+form {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 255, 100, 0.2);
+    width: 100%;
+    max-width: 450px;
+    color: #fff;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 28px;
+    color: #ffffff;
+}
+
+form p {
+    margin-bottom: 18px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: inset 0 0 5px rgba(0, 255, 100, 0.3);
+    outline: none;
+    transition: 0.4s ease;
+}
+
+input:focus {
+    box-shadow: 0 0 10px rgba(0, 255, 100, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to right, #43e97b, #38f9d7);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 255, 100, 0.4);
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(to right, #38f9d7, #43e97b);
+    box-shadow: 0 0 25px rgba(0, 255, 100, 0.6);
+}
+
+p[style*="color: green"] {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
