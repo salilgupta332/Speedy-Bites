@@ -362,6 +362,22 @@ body {
   }
 }
 
+.speciality {
+  padding: 5rem 9%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.speciality .heading {
+  font-size: 3.5rem;
+  color: #333;
+  margin-bottom: 4rem;
+}
+
+.speciality .heading span {
+  color: var(--red);
+}
+
 .speciality .box-container{
   display: flex;
   flex-wrap: wrap;
