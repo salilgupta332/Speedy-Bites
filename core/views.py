@@ -28,10 +28,6 @@ def menu_dashboard(request):
     items = MenuItem.objects()
     return render(request, 'admin/menu_dashboard.html', {'menu_items': items})
 
-@admin_login_required
-def menu_dashboard(request):
-    items = MenuItem.objects()
-    return render(request, 'admin/menu_dashboard.html', {'menu_items': items})
 
 def add_menu_item(request):
     if request.method == 'POST':
@@ -55,10 +51,7 @@ def add_menu_item(request):
     return render(request, 'admin/add_item.html', {'form': form})
 
 
-def delete_menu_item(request, item_id):
-    item = MenuItem.objects.get(id=item_id)
-    item.delete()
-    return redirect('menu_dashboard')
+
 
 
 def edit_menu_item(request, item_id):
@@ -91,7 +84,7 @@ def delete_menu_item(request, item_id):
         return HttpResponse("Item not found", status=404)
 
 def landing_page(request):
-   def landing_page(request):
+   
     try:
         print("[DEBUG] session:", request.session.items())
         return render(request, 'landing.html')
