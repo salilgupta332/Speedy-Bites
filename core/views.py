@@ -22,6 +22,8 @@ from core.utils import generate_otp, send_otp_email
 import random
 from django.contrib.auth.hashers import make_password
 import bcrypt
+from .models import MenuItem 
+
 
 @admin_login_required
 def menu_dashboard(request):
@@ -355,3 +357,7 @@ def send_otp_email_view(request):
         return redirect('verify_otp_email')
 
     return render(request, 'user/send_otp.html')
+
+def user_menu_view(request):
+    menu_items = MenuItem.objects.all()
+    return render(request, 'user/menu.html', {'menu_items': menu_items})

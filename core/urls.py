@@ -10,6 +10,7 @@ from .views import (
 )
 from . import views
 from django.contrib.auth import views as auth_views
+from core.views import user_menu_view
 from django.http import HttpResponse
 def test(request):
     return HttpResponse("Core URLs working")
@@ -22,6 +23,7 @@ urlpatterns = [
     path('add/', add_menu_item, name='add_menu_item'),
     path('edit/<str:item_id>/', edit_menu_item, name='edit_menu_item'),
     path('delete/<str:item_id>/', delete_menu_item, name='delete_menu_item'),
+    path('menu/', user_menu_view, name='user_menu'),
     
 
     # Auth

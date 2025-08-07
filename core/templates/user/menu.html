@@ -1,0 +1,26 @@
+<!-- templates/user/menu.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="text-center">Our Menu</h2>
+    <div class="row mt-4">
+      {% for item in menu_items %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            {% if item.image_data %}
+              <img src="data:image/png;base64,{{ item.image_data }}" class="card-img-top" alt="{{ item.name }}">
+            {% else %}
+              <img src="https://via.placeholder.com/300" class="card-img-top" alt="No Image">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              <p class="card-text"><strong>Price:</strong> ₹{{ item.price }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
