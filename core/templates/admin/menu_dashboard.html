@@ -1,31 +1,38 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Menu - Speedy Bites</title>
-    <link rel="stylesheet" href="{% static 'css/menu.css' %}" />
-  </head>
-  <body>
-    <main class="menu-section">
-      <h1>Our Menu</h1>
-      <div class="menu-items">
-        {% for item in menu_items %}
-        <div class="menu-card">
-          {% if item.image_data and item.image_type %}
-            <img src="data:{{ item.image_type }};base64,{{ item.image_data }}" alt="{{ item.name }}" />
-          {% else %}
-            <!-- If no image, you can use a placeholder or leave blank -->
-            <!-- <img src="{% static 'images/placeholder.jpg' %}" alt="No image" /> -->
-          {% endif %}
-          <h3>{{ item.name }}</h3>
-          <p>{{ item.description }}</p>
-          <strong>₹{{ item.price }}</strong>
+<html>
+<head>
+    <title>Speedy Bites </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <h1>🍽️ Speedy Bites Menu</h1>
+
+    <div class="top-bar">
+        <a href="{% url 'add_menu_item' %}" class="add-btn">➕ Add New Item</a>
+    </div>
+
+    <hr>
+
+    {% if menu_items %}
+        <div class="menu-grid">
+            {% for item in menu_items %}
+                <div class="menu-card">
+                    {% if item.image_data %}
+                        <img src="data:image/png;base64,{{ item.image_data }}" alt="{{ item.name }}" class="dish-image"/>
+                    {% endif %}
+                    <h2>{{ item.name }}</h2>
+                    <p class="desc">{{ item.description }}</p>
+                    <p class="price">₹{{ item.price }}</p>
+                    <div class="actions">
+                        <a href="{% url 'edit_menu_item' item.id %}">✏️ Edit</a>
+                        <a href="{% url 'delete_menu_item' item.id %}">🗑️ Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <p>No menu items available right now.</p>
-        {% endfor %}
-      </div>
-    </main>
-  </body>
+    {% else %}
+        <p>No items yet. Add your first dish!</p>
+    {% endif %}
+</body>
 </html>
