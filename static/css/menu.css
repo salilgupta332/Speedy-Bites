@@ -1,0 +1,77 @@
+/* menu.css */
+
+/* Base styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+main.menu-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.menu-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #d62828;
+}
+
+/* Grid layout */
+.menu-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+/* Individual card styles */
+.menu-card {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.menu-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.menu-card h3 {
+  font-size: 1.4rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.menu-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 10px 0 15px;
+  min-height: 50px;
+}
+
+.menu-card strong {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: #2a9d8f;
+  margin-top: auto;
+}
+
+/* Responsive text for empty state */
+.menu-items p {
+  font-size: 1.1rem;
+  color: #777;
+}

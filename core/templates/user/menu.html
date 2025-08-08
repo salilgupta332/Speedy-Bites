@@ -1,30 +1,28 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Menu - Speedy Bites</title>
-    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
-</head>
-<body>
-    
-
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}" />
+  </head>
+  <body>
     <main class="menu-section">
-        <h1>Our Menu</h1>
-        <div class="menu-items">
-            {% for item in menu_items %}
-                <div class="menu-card">
-                    {% if item.image_data %}
-                        <img src="{{ item.image_data }}" alt="{{ item.name }}">
-                    {% endif %}
-                    <h3>{{ item.name }}</h3>
-                    <p>{{ item.description }}</p>
-                    <strong>₹{{ item.price }}</strong>
-                </div>
-            {% empty %}
-                <p>No menu items available right now.</p>
-            {% endfor %}
+      <h1>Our Menu</h1>
+      <div class="menu-items">
+        {% for item in menu_items %}
+        <div class="menu-card">
+          {% if item.image_data %}
+          <img src="{{ item.image_data }}" alt="{{ item.name }}" />
+          {% endif %}
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+          <strong>₹{{ item.price }}</strong>
         </div>
+        {% empty %}
+        <p>No menu items available right now.</p>
+        {% endfor %}
+      </div>
     </main>
-</body>
+  </body>
 </html>
