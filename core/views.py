@@ -23,7 +23,7 @@ import random
 from django.contrib.auth.hashers import make_password
 import bcrypt
 from .models import MenuItem 
-
+from mimetypes import guess_type
 
 
 @admin_login_required
@@ -38,19 +38,28 @@ def add_menu_item(request):
         if form.is_valid():
             image_file = request.FILES.get('image')
             image_data = None
+            image_type = None
 
             if image_file:
+                # Read and encode image file to base64
                 image_data = base64.b64encode(image_file.read()).decode('utf-8')
+
+                # Detect MIME type
+                mime_type, _ = guess_type(image_file.name)
+                image_type = mime_type or 'image/jpeg'  # fallback MIME type
 
             MenuItem(
                 name=form.cleaned_data['name'],
                 description=form.cleaned_data['description'],
-                price=form.cleaned_data['price'],  # ✅ comma fixed here
-                image_data=image_data
+                price=form.cleaned_data['price'],
+                image_data=image_data,
+                image_type=image_type
             ).save()
+
             return redirect('menu_dashboard')
     else:
         form = MenuItemForm()
+
     return render(request, 'admin/add_item.html', {'form': form})
 
 

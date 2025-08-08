@@ -13,10 +13,10 @@
         {% for item in menu_items %}
         <div class="menu-card">
           {% if item.image_data and item.image_type %}
-          <img
-            src="data:{{ item.image_type }};base64,{{ item.image_data }}"
-            alt="{{ item.name }}"
-          />
+            <img src="data:{{ item.image_type }};base64,{{ item.image_data }}" alt="{{ item.name }}" />
+          {% else %}
+            <!-- If no image, you can use a placeholder or leave blank -->
+            <!-- <img src="{% static 'images/placeholder.jpg' %}" alt="No image" /> -->
           {% endif %}
           <h3>{{ item.name }}</h3>
           <p>{{ item.description }}</p>
