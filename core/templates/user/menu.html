@@ -1,26 +1,30 @@
-<!-- templates/user/menu.html -->
-{% extends 'landing.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu - Speedy Bites</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+</head>
+<body>
+    
 
-{% block content %}
-  <div class="container mt-5">
-    <h2 class="text-center">Our Menu</h2>
-    <div class="row mt-4">
-      {% for item in menu_items %}
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            {% if item.image_data %}
-              <img src="data:image/png;base64,{{ item.image_data }}" class="card-img-top" alt="{{ item.name }}">
-            {% else %}
-              <img src="https://via.placeholder.com/300" class="card-img-top" alt="No Image">
-            {% endif %}
-            <div class="card-body">
-              <h5 class="card-title">{{ item.name }}</h5>
-              <p class="card-text">{{ item.description }}</p>
-              <p class="card-text"><strong>Price:</strong> ₹{{ item.price }}</p>
-            </div>
-          </div>
+    <main class="menu-section">
+        <h1>Our Menu</h1>
+        <div class="menu-items">
+            {% for item in menu_items %}
+                <div class="menu-card">
+                    {% if item.image_data %}
+                        <img src="{{ item.image_data }}" alt="{{ item.name }}">
+                    {% endif %}
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.description }}</p>
+                    <strong>₹{{ item.price }}</strong>
+                </div>
+            {% empty %}
+                <p>No menu items available right now.</p>
+            {% endfor %}
         </div>
-      {% endfor %}
-    </div>
-  </div>
-{% endblock %}
+    </main>
+</body>
+</html>
