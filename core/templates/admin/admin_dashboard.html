@@ -22,14 +22,26 @@
   <div class="main-content">
     <!-- 🔹 Top Header Bar with Auth Links -->
     <div class="header-bar">
+      <div class="header-bar">
       <div class="header-title">
         <h1>Welcome, {{ request.user.username }}</h1>
         <p>Cloud Kitchen Admin Panel</p>
       </div>
       <div class="header-actions">
-        <a href="{% url 'admin_login' %}">Login</a>
-        <a href="{% url 'admin_register' %}">Register</a>
-        <a href="{% url 'admin_logout' %}">Logout</a>
+        {% if request.user.is_authenticated %}
+          <div class="admin-dropdown">
+            <button class="dropdown-btn">
+              {{ request.user.username }} ▼
+            </button>
+            <div class="dropdown-content">
+              <a href="{% url 'admin_profile' %}">Profile</a>
+              <a href="{% url 'admin_logout' %}">Logout</a>
+            </div>
+          </div>
+        {% else %}
+          <a href="{% url 'admin_login' %}">Login</a>
+          <a href="{% url 'admin_register' %}">Register</a>
+        {% endif %}
       </div>
     </div>
 
