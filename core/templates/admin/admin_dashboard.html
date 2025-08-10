@@ -20,22 +20,24 @@
   </div>
 
   <div class="main-content">
-    <header>
-      <h1>Welcome, {{ request.user.username }}</h1>
-      <p>Cloud Kitchen Admin Panel</p>
-    </header>
+    <!-- 🔹 Top Header Bar with Auth Links -->
+    <div class="header-bar">
+      <div class="header-title">
+        <h1>Welcome, {{ request.user.username }}</h1>
+        <p>Cloud Kitchen Admin Panel</p>
+      </div>
+      <div class="header-actions">
+        <a href="{% url 'admin_login' %}">Login</a>
+        <a href="{% url 'admin_register' %}">Register</a>
+        <a href="{% url 'admin_logout' %}">Logout</a>
+      </div>
+    </div>
 
     <div class="widgets">
       <div class="card">📦 Total Orders: 0</div>
       <div class="card">🍔 Menu Items: 0</div>
       <div class="card">📊 Revenue: ₹0</div>
       <div class="card">👥 Users: 0</div>
-    </div>
-
-    <div class="auth-links">
-      <a href="{% url 'admin_login' %}">Login</a> |
-      <a href="{% url 'admin_register' %}">Register</a> | 
-       <a href="{% url 'admin_logout' %}">Logout</a>
     </div>
   </div>
 </body>
