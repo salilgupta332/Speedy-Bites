@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speedy-bites-web
+  namespace: speedy-bites
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: speedy-bites-web
+  template:
+    metadata:
+      labels:
+        app: speedy-bites-web
+    spec:
+      containers:
+        - name: web
+          image: devops22003/speedy-bites:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DJANGO_ALLOWED_HOSTS
+              value: "*"
+            - name: DJANGO_SECRET_KEY
+              value: "super-secret-key"
+            - name: MONGO_USERNAME
+              value: "salilgupta332"
+            - name: MONGO_PASSWORD
+              value: "Speedy123"
+            - name: MONGO_CLUSTER
+              value: "cluster0.icd6aqk.mongodb.net"
+          volumeMounts:
+            - name: static-volume
+              mountPath: /app/staticfiles
+            - name: media-volume
+              mountPath: /app/media
+      volumes:
+        - name: static-volume
+          emptyDir: {}
+        - name: media-volume
+          emptyDir: {}

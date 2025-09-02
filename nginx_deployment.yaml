@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speedy-bites-nginx
+  namespace: speedy-bites
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: speedy-bites-nginx
+  template:
+    metadata:
+      labels:
+        app: speedy-bites-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: static-volume
+              mountPath: /app/staticfiles
+            - name: media-volume
+              mountPath: /app/media
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+        - name: static-volume
+          emptyDir: {}
+        - name: media-volume
+          emptyDir: {}
